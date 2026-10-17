@@ -4,7 +4,7 @@ import HttpError from "../../utils/HttpError.js"; // У тимлида обыч�
 export const getTravellerProfile = async (req, res, next) => {
   try {
     const { travellerId } = req.params;
-    const result = await usersServices.getTravellerById(travellerId);
+    const result = await usersServices.getTravellerById(travellerId, req.query);
 
     if (!result) {
       throw HttpError(404, `Traveller with ID ${travellerId} not found`);
