@@ -4,6 +4,10 @@ import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from "./categories/getCategories.js";
 
+// Импортируем твои контроллеры для пользователей
+import { getTravellers } from "./users/getTravellers.js";
+import { getTravellerProfile } from "./users/getTravellerProfile.js";
+
 export const auth = {
   registerUser,
   logoutUser,
@@ -12,4 +16,10 @@ export const auth = {
 
 export const categories = {
   getCategories,
+};
+
+// Создаем объект экспорта для твоих контроллеров
+export const users = {
+  getTravellers,
+  getTravellerProfile,
 };
