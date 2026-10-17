@@ -16,10 +16,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Diliri/travel-Ukraine-final-project-backend/issues"
+    "url": "https://github.com/Diliri/travel-ukraine-final-project-backend/issues"
   },
-  "homepage": "https://github.com/Diliri/travel-Ukraine-final-project-backend#readme",
-  "description": "",
+  "homepage": "https://github.com/Diliri/travel-ukraine-final-project-backend#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "celebrate": "^16.0.0",
@@ -34,5 +33,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "description": ""
 }
