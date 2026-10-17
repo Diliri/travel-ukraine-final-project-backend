@@ -1,16 +1,31 @@
 import { UserModel } from "../../models/user.js";
+import mongoose from "mongoose";
 
-// Сервис для получения списка всех авторов
+
 const getAllTravellers = async () => {
-  // Возвращаем всех пользователей, но берем только нужные для слайдера поля:
-  // имя, аватарку и количество статей
-  return await UserModel.find({}, "name avatarUrl storiesCount");
+  return await UserModel.find({}, "name avatarUrl articlesAmount");
 };
 
-// Сервис для получения профиля конкретного автора по его ID
+
 const getTravellerById = async (travellerId) => {
-  // Ищем в базе пользователя по его уникальному _id
-  return await UserModel.findById(travellerId, "name avatarUrl storiesCount");
+  
+  const user = await UserModel.findById(travellerId, "name avatarUrl articlesAmount");
+  
+  if (!user) return null;
+
+  
+  let articles = [];
+  try {
+    articles = await mongoose.model("article").find({ owner: travellerId });
+  } catch (e) {
+    articles = [];
+  }
+
+  
+  return {
+    profile: user,
+    articles: articles
+  };
 };
 
 export default {
