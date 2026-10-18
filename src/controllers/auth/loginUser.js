@@ -1,9 +1,5 @@
 import createHttpError from 'http-errors';
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
-import handlebars from 'handlebars';
-import path from 'node:path';
-import fs from 'node:fs/promises';
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
