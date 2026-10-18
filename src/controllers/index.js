@@ -4,6 +4,9 @@ import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from "./categories/getCategories.js";
 
+import { updateUserProfile } from "./users/updateUserProfile.js";
+import { updateUserAvatar } from "./users/updateUserAvatar.js";
+
 export const auth = {
   registerUser,
   logoutUser,
@@ -12,4 +15,10 @@ export const auth = {
 
 export const categories = {
   getCategories,
+};
+
+export const users = {
+  // ...методи Скрам-майстра (напр. getCurrentUser)
+  updateUserProfile,
+  updateUserAvatar,
 };
