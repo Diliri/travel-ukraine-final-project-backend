@@ -110,13 +110,20 @@ export const errorHandler = (err, req, res, _next) => {
     });
   }
 
+  if (err.name === "CastError") {
+    return res.status(404).json({
+      status: 404,
+      message: text.notFound,
+    });
+  }
+
   if (isHttpError(err)) {
     const status = err.status;
 
     const message =
       err.code === "EMAIL_ALREADY_EXISTS"
         ? text.duplicateEmail
-        : getHttpMessage(status, language);
+        : err.message || getHttpMessage(status, language);
 
     if (status >= 500) {
       req.log?.error(err);
