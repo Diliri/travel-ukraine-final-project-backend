@@ -1,40 +1,49 @@
 import { Schema, model } from "mongoose";
 
-const userSchema = new Schema({
-  name: { type: String, required: true, trim: true },
-  avatarUrl: { type: String, default: "" },
-  articlesAmount: { type: Number, default: 0, min: 0 },
-  savedArticles: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Story",
+const userSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 32,
     },
-  ],
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    trim: true,
+    avatarUrl: {
+      type: String,
+      default: "https://ac.goit.global/fullstack/react/default-avatar.jpg",
+    },
+    articlesAmount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    savedArticles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "story",
+      },
+    ],
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      maxlength: 64,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-    select: false, // поле password за замовчуванням не буде включатися до результатів запитів до бази даних
-  },
-});
+  { timestamps: true },
+);
 
 userSchema.methods.toJSON = function () {
-  const obj = this.toObject();
-  delete obj.password;
-  return obj;
+  const user = this.toObject();
+  delete user.password;
+  return user;
 };
-
-userSchema.methods.toJSON = function () {
-  const obj = this.toObject();
-  delete obj.password;
-  return obj;
-};
-// використовуємо практику «захист у кілька шарів» або Defense-in-Depth
 
 export const UserModel = model("user", userSchema);

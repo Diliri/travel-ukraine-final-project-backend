@@ -21,7 +21,7 @@ const storySchema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "category",
       required: true,
     },
     rate: {
@@ -31,7 +31,7 @@ const storySchema = new Schema(
     },
     ownerId: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
     date: {
