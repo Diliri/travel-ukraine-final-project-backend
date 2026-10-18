@@ -1,30 +1,24 @@
-// Єдиний формат помилок за контрактом: {"status":400,"message":"Validation error"}
-import { isCelebrateError } from "celebrate";
-import { isHttpError } from "http-errors";
-import multer from "multer";
+import { HttpError } from "http-errors";
 
-export const errorHandler = (err, req, res, _next) => {
-  if (isCelebrateError(err)) {
-    const message = [...err.details.values()].map((e) => e.message).join("; ");
-    return res
-      .status(400)
-      .json({ status: 400, message: message || "Validation error" });
+export const errorHandler = (err, req, res, next) => {
+  // 1. Помилки, створені свідомо через createHttpError (наприклад, 404, 400, 403)
+  if (err instanceof HttpError) {
+    return res.status(err.status).json({
+      message: err.message,
+    });
   }
 
-  if (err instanceof multer.MulterError) {
-    const message =
-      err.code === "LIMIT_FILE_SIZE"
-        ? "File is too large (max 1MB)"
-        : err.message;
-    return res.status(400).json({ status: 400, message });
+  // 2. Невалідний ObjectId у Mongoose (наприклад, передали "123" замість 24-значного ID)
+  if (err.name === "CastError") {
+    return res.status(404).json({
+      message: "Note not found",
+    });
   }
 
-  if (isHttpError(err)) {
-    return res
-      .status(err.status)
-      .json({ status: err.status, message: err.message });
-  }
+  // 3. Непередбачені критичні помилки сервера (500)
+  const isProduction = process.env.NODE_ENV === "production";
 
-  req.log?.error(err);
-  res.status(500).json({ status: 500, message: "Internal server error" });
+  res.status(500).json({
+    message: isProduction ? err.message || "Internal Server Error" : err.stack,
+  });
 };
