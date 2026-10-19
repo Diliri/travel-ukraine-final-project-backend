@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
-import { errors } from "celebrate";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -19,8 +18,18 @@ const PORT = process.env.PORT || 3000;
 
 // Стандартні Middleware
 app.use(express.json({ limit: "5mb" }));
-app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"] }));
-app.use(helmet());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+  }),
+);
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
 app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
@@ -30,7 +39,6 @@ app.use("/api/stories", storiesRouter);
 
 // Middleware для обробки неіснуючих маршрутів (404)
 app.use(notFoundHandler);
-app.use(errors());
 // Middleware для обробки помилок (500)
 app.use(errorHandler);
 
