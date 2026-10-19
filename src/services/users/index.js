@@ -22,7 +22,7 @@ const getTravellerById = async (travellerId, query = {}) => {
   let totalArticles = 0;
 
   try {
-    const ArticleModel = mongoose.model("article");
+    const ArticleModel = mongoose.model("story");
     
     // Рахуємо загальну кількість статей цього автора для фронтенд-пагінації
     totalArticles = await ArticleModel.countDocuments({ owner: travellerId });
