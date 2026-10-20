@@ -8,4 +8,4 @@ const categorySchema = new Schema({
   },
 });
 
-export const CategoryModel = model("category", categorySchema);
+export const CategoryModel = model("category", categorySchema, "categories");

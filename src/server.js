@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { connectMongoDB } from "./db/connectMongoDB.js";
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
+import { logger } from "./middlewares/logger.js";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRouter.js";
 import storiesRouter from "./routes/storiesRouter.js";
@@ -15,6 +16,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(logger);
 
 // Стандартні Middleware
 app.use(express.json({ limit: "5mb" }));
