@@ -4,7 +4,7 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name is required"],
       trim: true,
       maxlength: 32,
     },
@@ -20,12 +20,12 @@ const userSchema = new Schema(
     savedArticles: [
       {
         type: Schema.Types.ObjectId,
-        ref: "story",
+        ref: "story", 
       },
     ],
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       unique: true,
       trim: true,
       lowercase: true,
@@ -33,11 +33,14 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Password is required"],
       select: false,
     },
   },
-  { timestamps: true },
+  { 
+    timestamps: true,
+    versionKey: false 
+  },
 );
 
 userSchema.methods.toJSON = function () {
