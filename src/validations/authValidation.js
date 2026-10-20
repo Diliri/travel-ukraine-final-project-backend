@@ -7,3 +7,10 @@ export const registerUserValidation = celebrate({
     password: Joi.string().min(8).max(128).required(),
   }),
 });
+
+export const loginUserValidation = celebrate({
+  body: Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
+});
