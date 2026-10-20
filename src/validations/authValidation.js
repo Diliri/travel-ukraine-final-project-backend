@@ -9,7 +9,7 @@ export const registerUserValidation = celebrate({
 });
 
 export const loginUserValidation = celebrate({
-  [Segments.BODY]: Joi.object({
+  body: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
