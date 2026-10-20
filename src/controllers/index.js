@@ -1,3 +1,4 @@
+import { getStoryById } from "./stories/getStoryById.js";
 import { registerUser } from "./auth/registerUser.js";
 import { logoutUser } from "./auth/logoutUser.js";
 import { loginUser } from "./auth/loginUser.js";
