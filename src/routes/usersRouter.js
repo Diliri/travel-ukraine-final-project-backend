@@ -1,14 +1,20 @@
 import { Router } from "express";
-
-const usersRouter = Router();
-
-export default usersRouter;
-
 import { celebrate } from "celebrate";
-import { users as ctrl } from "../controllers/index.js";
-import { authenticate } from "../middlewares/authenticate.js"; // ← ще не існує, робить автор login/auth
+import { users } from "../controllers/index.js"; 
+import { authenticate } from "../middlewares/authenticate.js"; 
 import { uploadAvatar } from "../middlewares/uploadAvatar.js";
 import { updateProfileSchema } from "../validations/profileValidation.js";
 
-usersRouter.patch("/me", authenticate, celebrate(updateProfileSchema), ctrl.updateUserProfile);
-usersRouter.patch("/me/avatar", authenticate, uploadAvatar, ctrl.updateUserAvatar);
+const usersRouter = Router();
+
+// Получить список всех путешественников (авторов)
+usersRouter.get("/", users.getTravellers);
+
+// Получить публичный профиль конкретного автора по ID
+usersRouter.get("/:travellerId", users.getTravellerProfile);
+
+// Маршруты для личного кабинета (Позиция 2)
+usersRouter.patch("/me", authenticate, celebrate(updateProfileSchema), users.updateUserProfile);
+usersRouter.patch("/me/avatar", authenticate, uploadAvatar, users.updateUserAvatar);
+
+export default usersRouter;
