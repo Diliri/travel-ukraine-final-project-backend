@@ -4,6 +4,8 @@ import { logoutUser } from "./auth/logoutUser.js";
 import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from "./categories/getCategories.js";
+import { getStories } from "./stories/getStories.js";
+import { toggleFavorite } from "./stories/toggleFavorite.js";
 
 // Импортируем твои контроллеры для пользователей
 import { getTravellers } from "./users/getTravellers.js";
@@ -20,8 +22,10 @@ export const auth = {
 export const categories = {
   getCategories,
 };
-
-// Создаем один общий объект экспорта для всех функций пользователей
+export const stories = {
+  getStories,
+  toggleFavorite,
+};
 export const users = {
   getTravellers,
   getTravellerProfile,

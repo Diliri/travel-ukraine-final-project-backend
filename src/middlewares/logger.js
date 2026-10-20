@@ -1,7 +1,4 @@
-import pinoHttp from "pino-http";
-
-export const logger = pinoHttp({
-  transport: {
-    target: "pino-pretty",
-  },
-});
+export const logger = (req, res, next) => {
+  // console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+};
