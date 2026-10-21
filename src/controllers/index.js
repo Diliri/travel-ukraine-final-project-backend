@@ -24,6 +24,7 @@ export const categories = {
 };
 export const stories = {
   getStories,
+  getStoryById,
   toggleFavorite,
 };
 export const users = {
