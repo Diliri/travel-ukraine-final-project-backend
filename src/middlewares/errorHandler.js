@@ -135,6 +135,8 @@ export const errorHandler = (err, req, res, _next) => {
   req.log?.error(err);
   return res.status(500).json({
     status: 500,
-    message: text.internal,
+    //message: text.internal,
+    message: err.message,
+    ...{ stack: err.stack },
   });
 };
