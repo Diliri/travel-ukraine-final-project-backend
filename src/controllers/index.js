@@ -1,10 +1,10 @@
-import { getStoryById } from "./stories/getStoryById.js";
 import { registerUser } from "./auth/registerUser.js";
 import { logoutUser } from "./auth/logoutUser.js";
 import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from "./categories/getCategories.js";
 import { getStories } from "./stories/getStories.js";
+import { getStoryById } from "./stories/getStoryById.js";
 import { toggleFavorite } from "./stories/toggleFavorite.js";
 
 // Импортируем твои контроллеры для пользователей
@@ -25,6 +25,7 @@ export const categories = {
 export const stories = {
   getStoryById,
   getStories,
+  getStoryById,
   toggleFavorite,
 };
 export const users = {
