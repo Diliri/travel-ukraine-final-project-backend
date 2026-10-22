@@ -4,6 +4,7 @@ import { users } from "../controllers/index.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { uploadAvatar } from "../middlewares/uploadAvatar.js";
 import { updateProfileSchema } from "../validations/profileValidation.js";
+import { isValidId } from "../middlewares/isValidId.js";
 
 const usersRouter = Router();
 
