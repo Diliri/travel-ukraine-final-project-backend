@@ -13,6 +13,8 @@ import { getTravellerProfile } from "./users/getTravellerProfile.js";
 import { updateUserProfile } from "./users/updateUserProfile.js";
 import { updateUserAvatar } from "./users/updateUserAvatar.js";
 import { getCurrentUser } from "./users/getCurrentUser.js";
+import { getMyStories } from "./stories/getMyStories.js";
+import { getSavedStories } from "./stories/getSavedStories.js";
 
 export const auth = {
   registerUser,
@@ -27,6 +29,8 @@ export const stories = {
   getStoryById,
   getStories,
   toggleFavorite,
+  getMyStories,
+  getSavedStories,
 };
 export const users = {
   getTravellers,
