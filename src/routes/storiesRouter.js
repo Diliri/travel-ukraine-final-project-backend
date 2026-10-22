@@ -7,23 +7,26 @@ import { getPopularStoriesController } from "../controllers/stories/getPopularSt
 
 const storiesRouter = Router();
 storiesRouter.get("/", ctrl.getStories);
-storiesRouter.get("/:storyId", celebrate(storyIdSchema), ctrl.getStoryById);
-storiesRouter.patch("/:storyId/favorite", authenticate, ctrl.toggleFavorite);
-
-storiesRouter.get("/", ctrl.getStories);
-
-storiesRouter.get("/popular", getPopularStoriesController);
-
 storiesRouter.get(
   "/:storyId",
+  isValidId("storyId"),
   celebrate(storyIdSchema),
-  ctrl.getStoryById,
+  ctrl.getStoryById
+);
+// розбити на два різні запити __
+storiesRouter.post(
+  "/:storyId/favorite",
+  isValidId("storyId"),
+  authenticate,
+  ctrl.addToFavorite
+);
+storiesRouter.delete(
+  "/:storyId/favorite",
+  isValidId("storyId"),
+  authenticate,
+  ctrl.deleteFavorite
 );
 
-storiesRouter.patch(
-  "/:storyId/favorite",
-  authenticate,
-  ctrl.toggleFavorite,
-);
+storiesRouter.get("/popular", getPopularStoriesController);
 
 export default storiesRouter;

@@ -27,12 +27,12 @@ app.use(
     origin: true,
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-  }),
+  })
 );
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
-  }),
+  })
 );
 app.use(cookieParser());
 
@@ -40,6 +40,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/stories", storiesRouter);
+
 app.use("/api/home", homeRouter);
 // Middleware для обробки неіснуючих маршрутів (404)
 app.use(notFoundHandler);
