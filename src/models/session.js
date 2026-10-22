@@ -32,4 +32,4 @@ sessionSchema.post('save', handleMongooseError);
 sessionSchema.pre('findOneAndUpdate', setUpdateOptions);
 sessionSchema.post('findOneAndUpdate', handleMongooseError);
 
-export const Session = model('session', sessionSchema);
+export const SessionModel = model('session', sessionSchema);

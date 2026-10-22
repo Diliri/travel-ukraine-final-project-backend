@@ -12,22 +12,36 @@ import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
-import { authRouter } from './routes/authRoutes.js';
+
+import authRouter from './routes/authRoutes.js';
+import storiesRouter from './routes/storiesRoutes.js';
+import usersRouter from './routes/usersRoutes.js';
+import categoriesRouter from './routes/categoriesRoutes.js';
 
 const app = express();
 
+app.use(logger);
+
+app.use(express.json({ limit: '5mb' }));
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  }),
+);
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
   }),
 );
 app.use(cookieParser());
-app.use(helmet());
-app.use(logger);
-app.use(express.json());
 
-app.use(authRouter);
+// Routes
+app.use('/api/auth', authRouter);
+app.use('/api/stories', storiesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/categories', categoriesRouter);
 
 app.use(notFoundHandler);
 app.use(errors());

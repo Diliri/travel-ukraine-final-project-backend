@@ -14,24 +14,26 @@ import {
 } from '../controllers/auth/authControllers.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
-export const authRouter = Router();
+const authRouter = Router();
 
 authRouter.post(
-  '/api/auth/register',
+  '/register',
   celebrate(registerUserSchema, { abortEarly: false }),
   registerUser,
 );
 
 authRouter.post(
-  '/api/auth/login',
+  '/login',
   celebrate(loginUserSchema, { abortEarly: false }),
   loginUser,
 );
 
-authRouter.post('/api/auth/refresh', refreshUserSession);
+authRouter.post('/refresh', refreshUserSession);
 
-authRouter.post('/api/auth/logout', authenticate, logoutUser);
+authRouter.post('/logout', authenticate, logoutUser);
 
-authRouter.get('/api/auth/me', authenticate, getMe);
+authRouter.get('/me', authenticate, getMe);
 
-authRouter.get('/api/auth/session', authenticate, checkSession);
+authRouter.get('/session', authenticate, checkSession);
+
+export default authRouter;
