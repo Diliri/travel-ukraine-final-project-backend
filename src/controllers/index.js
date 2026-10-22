@@ -12,6 +12,7 @@ import { getTravellers } from "./users/getTravellers.js";
 import { getTravellerProfile } from "./users/getTravellerProfile.js";
 import { updateUserProfile } from "./users/updateUserProfile.js";
 import { updateUserAvatar } from "./users/updateUserAvatar.js";
+import { getCurrentUser } from "./users/getCurrentUser.js";
 
 export const auth = {
   registerUser,
@@ -33,4 +34,5 @@ export const users = {
   getTravellerProfile,
   updateUserProfile,
   updateUserAvatar,
+  getCurrentUser,
 };
