@@ -23,6 +23,7 @@ export const categories = {
   getCategories,
 };
 export const stories = {
+  getStoryById,
   getStories,
   getStoryById,
   toggleFavorite,
