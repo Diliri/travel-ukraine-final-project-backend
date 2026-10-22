@@ -14,20 +14,24 @@ usersRouter.get("/", users.getTravellers);
 usersRouter.get("/me", authenticate, users.getCurrentUser);
 
 // Получить публичный профиль конкретного автора по ID
-usersRouter.get("/:travellerId", users.getTravellerProfile);
+usersRouter.get(
+  "/:travellerId",
+  isValidId("travellerId"),
+  users.getTravellerProfile
+);
 
 // Маршруты для личного кабинета (Позиция 2)
 usersRouter.patch(
   "/me",
   authenticate,
   celebrate(updateProfileSchema),
-  users.updateUserProfile,
+  users.updateUserProfile
 );
 usersRouter.patch(
   "/me/avatar",
   authenticate,
   uploadAvatar,
-  users.updateUserAvatar,
+  users.updateUserAvatar
 );
 
 export default usersRouter;
