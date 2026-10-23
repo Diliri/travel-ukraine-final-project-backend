@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateStoriesQuery } from "../validations/stories.js";
 import { celebrate } from "celebrate";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
@@ -7,8 +8,10 @@ import { storyIdSchema } from "../validations/storyValidation.js";
 import { getPopularStoriesController } from "../controllers/stories/getPopularStoriesController.js";
 import { isValidId } from "../middlewares/isValidId.js";
 const storiesRouter = Router();
-storiesRouter.get("/", ctrl.getStories);
+
+storiesRouter.get("/", validateStoriesQuery, ctrl.getStories);
 storiesRouter.get("/popular", getPopularStoriesController);
+
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
@@ -21,14 +24,13 @@ storiesRouter.post(
   authenticate,
   ctrl.addToFavorite,
 );
+
 storiesRouter.delete(
   "/:storyId/favorite",
   isValidId("storyId"),
   authenticate,
   ctrl.deleteFavorite,
 );
-
-
 
 storiesRouter.get("/", ctrl.getStories);
 storiesRouter.get("/me", authenticate, ctrl.getMyStories);
