@@ -1,4 +1,3 @@
-
 import { StoryModel } from "../../models/story.js";
 
 export const getPopularStories = async () => {

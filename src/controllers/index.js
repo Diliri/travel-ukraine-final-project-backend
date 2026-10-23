@@ -12,6 +12,7 @@ import { getTravellers } from "./users/getTravellers.js";
 import { getTravellerProfile } from "./users/getTravellerProfile.js";
 import { updateUserProfile } from "./users/updateUserProfile.js";
 import { updateUserAvatar } from "./users/updateUserAvatar.js";
+import { updateUserPassword } from "./users/updateUserPassword.js";
 import { getCurrentUser } from "./users/getCurrentUser.js";
 
 export const auth = {
@@ -26,7 +27,6 @@ export const categories = {
 export const stories = {
   getStoryById,
   getStories,
-  getStoryById,
   toggleFavorite,
 };
 export const users = {
@@ -34,5 +34,6 @@ export const users = {
   getTravellerProfile,
   updateUserProfile,
   updateUserAvatar,
+  updateUserPassword,
   getCurrentUser,
 };

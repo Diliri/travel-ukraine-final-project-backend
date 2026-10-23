@@ -7,20 +7,29 @@ import { storyIdSchema } from "../validations/storyValidation.js";
 import { getPopularStoriesController } from "../controllers/stories/getPopularStoriesController.js";
 
 const storiesRouter = Router();
-storiesRouter.get("/", validateStoriesQuery, ctrl.getStories);
 
+storiesRouter.get("/", validateStoriesQuery, ctrl.getStories);
 storiesRouter.get("/popular", getPopularStoriesController);
 
 storiesRouter.get(
   "/:storyId",
+  isValidId("storyId"),
   celebrate(storyIdSchema),
-  ctrl.getStoryById,
+  ctrl.getStoryById
 );
 
-storiesRouter.patch(
+storiesRouter.post(
   "/:storyId/favorite",
+  isValidId("storyId"),
   authenticate,
-  ctrl.toggleFavorite,
+  ctrl.addToFavorite
+);
+
+storiesRouter.delete(
+  "/:storyId/favorite",
+  isValidId("storyId"),
+  authenticate,
+  ctrl.deleteFavorite
 );
 
 export default storiesRouter;
