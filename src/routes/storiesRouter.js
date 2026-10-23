@@ -5,9 +5,10 @@ import { isValidId } from "../middlewares/isValidId.js";
 import { stories as ctrl } from "../controllers/index.js";
 import { storyIdSchema } from "../validations/storyValidation.js";
 import { getPopularStoriesController } from "../controllers/stories/getPopularStoriesController.js";
-
+import { isValidId } from "../middlewares/isValidId.js";
 const storiesRouter = Router();
 storiesRouter.get("/", ctrl.getStories);
+storiesRouter.get("/popular", getPopularStoriesController);
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
@@ -27,6 +28,6 @@ storiesRouter.delete(
   ctrl.deleteFavorite,
 );
 
-storiesRouter.get("/popular", getPopularStoriesController);
+
 
 export default storiesRouter;

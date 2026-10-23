@@ -25,12 +25,13 @@ export const auth = {
 export const categories = {
   getCategories,
 };
-export const stories = {
+ export const stories = {
   getStoryById,
   getStories,
   addToFavorite,
   deleteFavorite,
 };
+
 export const users = {
   getTravellers,
   getTravellerProfile,
@@ -39,3 +40,4 @@ export const users = {
   updateUserPassword,
   getCurrentUser,
 };
+  

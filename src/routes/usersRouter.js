@@ -9,6 +9,7 @@ import {
   updatePasswordSchema,
 } from "../validations/profileValidation.js";
 
+
 const usersRouter = Router();
 
 // Получить список всех путешественников (авторов)
