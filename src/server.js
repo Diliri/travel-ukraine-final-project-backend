@@ -17,12 +17,14 @@ import authRouter from './routes/authRoutes.js';
 import storiesRouter from './routes/storiesRoutes.js';
 import usersRouter from './routes/usersRoutes.js';
 import categoriesRouter from './routes/categoriesRoutes.js';
+import homeRouter from './routes/homeRouter.js';
 
 const app = express();
 
 app.use(logger);
 
 app.use(express.json({ limit: '5mb' }));
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -35,13 +37,13 @@ app.use(
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   }),
 );
-app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/home', homeRouter);
 
 app.use(notFoundHandler);
 app.use(errors());

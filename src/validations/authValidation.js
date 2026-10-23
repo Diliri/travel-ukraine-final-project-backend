@@ -15,6 +15,6 @@ export const loginUserSchema = {
   }),
 };
 
-// For compatibility with other style
+// Compatibility aliases
 export const registerUserValidation = registerUserSchema;
 export const loginUserValidation = loginUserSchema;
