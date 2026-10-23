@@ -29,4 +29,10 @@ storiesRouter.delete(
   ctrl.deleteFavorite
 );
 
+storiesRouter.get("/", ctrl.getStories);
+storiesRouter.get("/me", authenticate, ctrl.getMyStories);
+storiesRouter.get("/saved", authenticate, ctrl.getSavedStories);
+storiesRouter.get("/:storyId", celebrate(storyIdSchema), ctrl.getStoryById);
+storiesRouter.patch("/:storyId/favorite", authenticate, ctrl.toggleFavorite);
+
 export default storiesRouter;
