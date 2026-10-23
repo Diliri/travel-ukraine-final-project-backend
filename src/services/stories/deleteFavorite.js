@@ -9,6 +9,5 @@ export const deleteFavorite = async (user, storyId) => {
   }
 
   user.savedArticles.pull(story._id);
-
   return user.save();
 };

@@ -9,6 +9,5 @@ export const addToFavorite = async (user, storyId) => {
   }
 
   user.savedArticles.addToSet(story._id);
-
   return user.save();
 };
