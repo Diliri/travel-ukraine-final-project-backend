@@ -6,28 +6,27 @@ import { stories as ctrl } from "../controllers/index.js";
 import { storyIdSchema } from "../validations/storyValidation.js";
 import { getPopularStoriesController } from "../controllers/stories/getPopularStoriesController.js";
 import { isValidId } from "../middlewares/isValidId.js";
+
 const storiesRouter = Router();
-storiesRouter.get("/", ctrl.getStories);
+storiesRouter.get("/", ctrl.getStories); // видалити?
 storiesRouter.get("/popular", getPopularStoriesController);
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
   celebrate(storyIdSchema),
-  ctrl.getStoryById,
+  ctrl.getStoryById
 );
 storiesRouter.post(
   "/:storyId/favorite",
   isValidId("storyId"),
   authenticate,
-  ctrl.addToFavorite,
+  ctrl.addToFavorite
 );
 storiesRouter.delete(
   "/:storyId/favorite",
   isValidId("storyId"),
   authenticate,
-  ctrl.deleteFavorite,
+  ctrl.deleteFavorite
 );
-
-
 
 export default storiesRouter;
