@@ -5,7 +5,8 @@ import { loginUser } from "./auth/loginUser.js";
 import { getCategories } from "./categories/getCategories.js";
 import { getStories } from "./stories/getStories.js";
 import { getStoryById } from "./stories/getStoryById.js";
-import { toggleFavorite } from "./stories/toggleFavorite.js";
+import { addToFavorite } from "./stories/addToFavorite.js";
+import { deleteFavorite } from "./stories/deleteFavorite.js";
 
 // Импортируем твои контроллеры для пользователей
 import { getTravellers } from "./users/getTravellers.js";
@@ -27,7 +28,8 @@ export const categories = {
 export const stories = {
   getStoryById,
   getStories,
-  toggleFavorite,
+  addToFavorite,
+  deleteFavorite,
 };
 export const users = {
   getTravellers,
