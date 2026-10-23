@@ -10,7 +10,7 @@ export const uploadAvatar = multer({
   limits: { fileSize: 1 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (!ALLOWED_TYPES.includes(file.mimetype)) {
-      return cb(createHttpError(400, "Allowed formats: JPG, PNG, WEBP"));
+      return cb(createHttpError(400, "Дозволені формати: JPG, PNG, WEBP"));
     }
     cb(null, true);
   },
