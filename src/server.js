@@ -1,6 +1,3 @@
-import dns from 'dns';
-dns.setServers(['1.1.1.1', '8.8.8.8']);
-
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -17,7 +14,6 @@ import authRouter from './routes/authRoutes.js';
 import storiesRouter from './routes/storiesRoutes.js';
 import usersRouter from './routes/usersRoutes.js';
 import categoriesRouter from './routes/categoriesRoutes.js';
-import homeRouter from './routes/homeRouter.js';
 
 const app = express();
 
@@ -43,7 +39,6 @@ app.use('/api/auth', authRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
-app.use('/api/home', homeRouter);
 
 app.use(notFoundHandler);
 app.use(errors());
@@ -51,7 +46,7 @@ app.use(errorHandler);
 
 await connectMongoDB();
 
-const port = Number(process.env.PORT) || 4200;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+const PORT = Number(process.env.PORT) || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
