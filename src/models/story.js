@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const storySchema = new Schema(
   {
@@ -21,7 +21,7 @@ const storySchema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: "category",
+      ref: 'category',
       required: true,
     },
     rate: {
@@ -31,7 +31,7 @@ const storySchema = new Schema(
     },
     ownerId: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
     date: {
@@ -46,7 +46,7 @@ const storySchema = new Schema(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
-export const StoryModel = model("stories", storySchema, "stories");
+export const StoryModel = model('story', storySchema, 'story');

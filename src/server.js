@@ -1,57 +1,52 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-import dotenv from "dotenv";
-import { connectMongoDB } from "./db/connectMongoDB.js";
-import { notFoundHandler } from "./middlewares/notFoundHandler.js";
-import { errorHandler } from "./middlewares/errorHandler.js";
-import { logger } from "./middlewares/logger.js";
-import cookieParser from "cookie-parser";
-import authRouter from "./routes/authRouter.js";
-import storiesRouter from "./routes/storiesRouter.js";
-import usersRouter from "./routes/usersRouter.js";
-import categoriesRouter from "./routes/categoriesRouter.js";
-import homeRouter from "./routes/homeRouter.js";
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import { errors } from 'celebrate';
+import 'dotenv/config';
 
-dotenv.config();
+import { logger } from './middlewares/logger.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { connectMongoDB } from './db/connectMongoDB.js';
+
+import authRouter from './routes/authRoutes.js';
+import storiesRouter from './routes/storiesRoutes.js';
+import usersRouter from './routes/usersRoutes.js';
+import categoriesRouter from './routes/categoriesRoutes.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(logger);
 
-// Стандартні Middleware
-app.use(express.json({ limit: "5mb" }));
+app.use(express.json({ limit: '5mb' }));
+app.use(cookieParser());
 app.use(
   cors({
-    origin: true,
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
-    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-  })
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  }),
 );
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" },
-  })
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  }),
 );
-app.use(cookieParser());
 
-app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
-app.use("/api/categories", categoriesRouter);
-app.use("/api/stories", storiesRouter);
+// Routes
+app.use('/api/auth', authRouter);
+app.use('/api/stories', storiesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/categories', categoriesRouter);
 
-app.use("/api/home", homeRouter);
-// Middleware для обробки неіснуючих маршрутів (404)
 app.use(notFoundHandler);
-// Middleware для обробки помилок (500)
+app.use(errors());
 app.use(errorHandler);
 
-// підключення до MongoDB
 await connectMongoDB();
 
-// Запуск сервера
+const PORT = Number(process.env.PORT) || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
