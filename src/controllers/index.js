@@ -18,6 +18,8 @@ import { getCurrentUser } from "./users/getCurrentUser.js";
 import { getMyStories } from "./stories/getMyStories.js";
 import { getSavedStories } from "./stories/getSavedStories.js";
 
+import { getPopularStoriesController } from "./stories/getPopularStories.js";
+
 export const auth = {
   registerUser,
   logoutUser,
@@ -35,6 +37,7 @@ export const stories = {
   deleteFavorite,
   getMyStories,
   getSavedStories,
+  getPopularStoriesController,
 };
 
 export const users = {

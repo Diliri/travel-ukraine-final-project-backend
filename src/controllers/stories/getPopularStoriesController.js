@@ -1,6 +1,3 @@
-
-import { getPopularStories } from "../../services/stories/getPopularStories.js";
-
 export const getPopularStoriesController = async (req, res, next) => {
   try {
     const stories = await getPopularStories();
@@ -14,4 +11,3 @@ export const getPopularStoriesController = async (req, res, next) => {
     next(error);
   }
 };
-
