@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { celebrate } from "celebrate";
 import { authenticate } from "../middlewares/authenticate.js";
-import { isValidId } from "../middlewares/isValidId.js";
+//import { isValidId } from "../middlewares/isValidId.js";
 import { stories as ctrl } from "../controllers/index.js";
-import { storyIdSchema } from "../validations/storyValidation.js";
+import { storyIdValidation } from "../validations/storyValidation.js";
 
 const storiesRouter = Router();
 storiesRouter.get("/", ctrl.getStories); // видалити?
@@ -11,7 +11,7 @@ storiesRouter.get("/popular", ctrl.getPopularStoriesController);
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
-  celebrate(storyIdSchema),
+  celebrate(storyIdValidation),
   ctrl.getStoryById
 );
 storiesRouter.post(
