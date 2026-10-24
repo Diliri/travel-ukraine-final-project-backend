@@ -1,4 +1,3 @@
-// src/routes/authRouter.js
 
 import { Router } from "express";
 

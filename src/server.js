@@ -10,10 +10,11 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 
-import authRouter from './routes/authRoutes.js';
-import storiesRouter from './routes/storiesRoutes.js';
-import usersRouter from './routes/usersRoutes.js';
-import categoriesRouter from './routes/categoriesRoutes.js';
+import authRouter from './routes/authRouter.js';
+import storiesRouter from './routes/storiesRouter.js';
+import usersRouter from './routes/usersRouter.js';
+import categoriesRouter from './routes/categoriesRouter.js';
+import homeRouter from './routes/homeRouter.js';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/categories', categoriesRouter);
+//app.use('/api/home', homeRouter);
 
 app.use(notFoundHandler);
 app.use(errors());

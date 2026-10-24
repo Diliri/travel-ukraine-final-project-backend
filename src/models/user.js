@@ -48,13 +48,13 @@ const userSchema = new Schema(
 );
 
 userSchema.methods.toJSON = function () {
-  const obj = this.toObject();
-  delete obj.password;
-  return obj;
+  const user = this.toObject();
+  delete user.password;
+  return user;
 };
 
 userSchema.post('save', handleMongooseError);
-userSchema.pre('findOneAndUpdate', setUpdateOptions);
+userSchema.pre('findOneAndUpdate', setUpdateOptions); //Mongoose middleware (хук) на схемі користувача.
 userSchema.post('findOneAndUpdate', handleMongooseError);
 
 export const UserModel = model('user', userSchema);
