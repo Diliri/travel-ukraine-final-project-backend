@@ -20,11 +20,11 @@ const getTravellerById = async (travellerId, query = {}) => {
   let totalArticles = 0;
 
   try {
-    const ArticleModel = mongoose.model('story');
+    const StoryModel = mongoose.model('story');
 
-    totalArticles = await ArticleModel.countDocuments({ ownerId: travellerId });
+    totalArticles = await StoryModel.countDocuments({ owner: travellerId });
 
-    articles = await ArticleModel.find({ ownerId: travellerId })
+    articles = await StoryModel.find({ owner: travellerId })
       .skip(skip)
       .limit(limit);
   } catch (e) {

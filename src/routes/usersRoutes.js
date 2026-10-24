@@ -1,20 +1,44 @@
-import { Router } from "express";
-import { celebrate } from "celebrate";
-import { users } from "../controllers/index.js"; 
-import { authenticate } from "../middlewares/authenticate.js"; 
-import { uploadAvatar } from "../middlewares/uploadAvatar.js";
-import { updateProfileSchema } from "../validations/profileValidation.js";
+import { Router } from 'express';
+import { celebrate } from 'celebrate';
+import { users } from '../controllers/index.js';
+import { authenticate } from '../middlewares/authenticate.js';
+import { isValidId } from '../middlewares/isValidId.js';
+import { uploadAvatar } from '../middlewares/uploadAvatar.js';
+import {
+  updateProfileSchema,
+  updatePasswordSchema,
+} from '../validations/profileValidation.js';
 
 const usersRouter = Router();
 
-// Получить список всех путешественников (авторов)
-usersRouter.get("/", users.getTravellers);
+usersRouter.get('/', users.getTravellers);
+usersRouter.get('/me', authenticate, users.getCurrentUser);
 
-// Получить публичный профиль конкретного автора по ID
-usersRouter.get("/:travellerId", users.getTravellerProfile);
+usersRouter.patch(
+  '/me',
+  authenticate,
+  celebrate(updateProfileSchema),
+  users.updateUserProfile,
+);
 
-// Маршруты для личного кабинета (Позиция 2)
-usersRouter.patch("/me", authenticate, celebrate(updateProfileSchema), users.updateUserProfile);
-usersRouter.patch("/me/avatar", authenticate, uploadAvatar, users.updateUserAvatar);
+usersRouter.patch(
+  '/me/avatar',
+  authenticate,
+  uploadAvatar,
+  users.updateUserAvatar,
+);
+
+usersRouter.patch(
+  '/me/password',
+  authenticate,
+  celebrate(updatePasswordSchema),
+  users.updateUserPassword,
+);
+
+usersRouter.get(
+  '/:travellerId',
+  isValidId('travellerId'),
+  users.getTravellerProfile,
+);
 
 export default usersRouter;
