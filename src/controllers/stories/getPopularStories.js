@@ -1,4 +1,4 @@
-export const getPopularStoriesController = async (req, res, next) => {
+export const getPopularStories = async (req, res, next) => {
   try {
     const stories = await getPopularStories();
 

@@ -9,6 +9,7 @@ export {
   storyIdValidation,
   paginationValidation,
   createStoryValidation,
+  validateStoriesQuery,
 } from "./storyValidation.js";
 
 export {

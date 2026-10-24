@@ -3,6 +3,7 @@
 import { Router } from "express";
 
 import { auth as ctrl } from "../controllers/index.js";
+import { celebrate } from "celebrate";
 
 import {
   registerUserValidation,
@@ -19,10 +20,10 @@ authRouter.post("/logout", authenticate, ctrl.logoutUser);
 authRouter.post("/login", loginUserValidation, ctrl.loginUser);
 authRouter.post("/refresh", ctrl.refreshUserSession);
 // перенесли сюди, щоб не викидало помилку
-storiesRouter.get(
+authRouter.get(
   "/popular",
   celebrate(getPopularStoriesValidation),
-  ctrl.getPopularStoriesController
+  ctrl.getPopularStories
 );
 
 export default authRouter;
