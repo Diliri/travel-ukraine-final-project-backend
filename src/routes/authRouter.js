@@ -7,7 +7,8 @@ import { auth as ctrl } from "../controllers/index.js";
 import {
   registerUserValidation,
   loginUserValidation,
-} from "../validations/authValidation.js";
+  getPopularStoriesValidation,
+} from "../validations/index.js";
 
 import { authenticate } from "../middlewares/authenticate.js";
 
@@ -16,5 +17,12 @@ const authRouter = Router();
 authRouter.post("/register", registerUserValidation, ctrl.registerUser);
 authRouter.post("/logout", authenticate, ctrl.logoutUser);
 authRouter.post("/login", loginUserValidation, ctrl.loginUser);
+authRouter.post("/refresh", ctrl.refreshUserSession);
+// перенесли сюди, щоб не викидало помилку
+storiesRouter.get(
+  "/popular",
+  celebrate(getPopularStoriesValidation),
+  ctrl.getPopularStoriesController
+);
 
 export default authRouter;

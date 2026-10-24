@@ -4,38 +4,33 @@ import { celebrate } from "celebrate";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
 import { stories as ctrl } from "../controllers/index.js";
-import { storyIdSchema } from "../validations/storyValidation.js";
-import { getPopularStoriesController } from "../controllers/stories/getPopularStoriesController.js";
-import { isValidId } from "../middlewares/isValidId.js";
+import {
+  getAllStoriesValidation,
+  storyIdValidation,
+  createStoryValidation,
+} from "../validations/index.js";
+
 const storiesRouter = Router();
-
-storiesRouter.get("/", validateStoriesQuery, ctrl.getStories);
-storiesRouter.get("/popular", getPopularStoriesController);
-
+storiesRouter.get("/", celebrate(getAllStoriesValidation), ctrl.getStories);
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
-  celebrate(storyIdSchema),
-  ctrl.getStoryById,
+  celebrate(storyIdValidation),
+  ctrl.getStoryById
 );
 storiesRouter.post(
   "/:storyId/favorite",
   isValidId("storyId"),
   authenticate,
-  ctrl.addToFavorite,
+  celebrate(createStoryValidation),
+  ctrl.addToFavorite
 );
 
 storiesRouter.delete(
   "/:storyId/favorite",
   isValidId("storyId"),
   authenticate,
-  ctrl.deleteFavorite,
+  ctrl.deleteFavorite
 );
-
-storiesRouter.get("/", ctrl.getStories);
-storiesRouter.get("/me", authenticate, ctrl.getMyStories);
-storiesRouter.get("/saved", authenticate, ctrl.getSavedStories);
-storiesRouter.get("/:storyId", celebrate(storyIdSchema), ctrl.getStoryById);
-storiesRouter.patch("/:storyId/favorite", authenticate, ctrl.toggleFavorite);
 
 export default storiesRouter;

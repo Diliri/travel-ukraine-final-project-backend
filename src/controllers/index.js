@@ -1,5 +1,5 @@
 import { registerUser } from "./auth/registerUser.js";
-import { logoutUser } from "./auth/logoutUser.js";
+import { logoutUser, refreshUserSession } from "./auth/logoutUser.js";
 import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from "./categories/getCategories.js";
@@ -18,22 +18,26 @@ import { getCurrentUser } from "./users/getCurrentUser.js";
 import { getMyStories } from "./stories/getMyStories.js";
 import { getSavedStories } from "./stories/getSavedStories.js";
 
+import { getPopularStoriesController } from "./stories/getPopularStories.js";
+
 export const auth = {
   registerUser,
   logoutUser,
   loginUser,
+  refreshUserSession,
 };
 
 export const categories = {
   getCategories,
 };
- export const stories = {
+export const stories = {
   getStoryById,
   getStories,
   addToFavorite,
   deleteFavorite,
   getMyStories,
   getSavedStories,
+  getPopularStoriesController,
 };
 
 export const users = {
@@ -44,4 +48,3 @@ export const users = {
   updateUserPassword,
   getCurrentUser,
 };
-  
