@@ -1,5 +1,5 @@
 import { registerUser } from "./auth/registerUser.js";
-import { logoutUser } from "./auth/logoutUser.js";
+import { logoutUser, refreshUserSession } from "./auth/logoutUser.js";
 import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from "./categories/getCategories.js";
@@ -22,12 +22,13 @@ export const auth = {
   registerUser,
   logoutUser,
   loginUser,
+  refreshUserSession,
 };
 
 export const categories = {
   getCategories,
 };
- export const stories = {
+export const stories = {
   getStoryById,
   getStories,
   addToFavorite,
@@ -44,4 +45,3 @@ export const users = {
   updateUserPassword,
   getCurrentUser,
 };
-  
