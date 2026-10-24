@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateStoriesQuery } from "../validations/stories.js";
 import { celebrate } from "celebrate";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
@@ -24,6 +25,7 @@ storiesRouter.post(
   celebrate(createStoryValidation),
   ctrl.addToFavorite
 );
+
 storiesRouter.delete(
   "/:storyId/favorite",
   isValidId("storyId"),
