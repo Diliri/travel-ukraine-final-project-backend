@@ -1,1 +1,4 @@
-export { registerUserValidation } from "./authValidation.js";
+export {
+  registerUserValidation,
+  loginUserValidation,
+} from "./authValidation.js";
