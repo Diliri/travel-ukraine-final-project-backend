@@ -1,13 +1,22 @@
 import { Router } from "express";
 import { celebrate } from "celebrate";
 import { authenticate } from "../middlewares/authenticate.js";
-//import { isValidId } from "../middlewares/isValidId.js";
+import { isValidId } from "../middlewares/isValidId.js";
 import { stories as ctrl } from "../controllers/index.js";
-import { storyIdValidation } from "../validations/storyValidation.js";
+import {
+  getPopularStoriesValidation,
+  getAllStoriesValidation,
+  storyIdValidation,
+  createStoryValidation,
+} from "../validations/index.js";
 
 const storiesRouter = Router();
-storiesRouter.get("/", ctrl.getStories); // видалити?
-storiesRouter.get("/popular", ctrl.getPopularStoriesController);
+storiesRouter.get("/", celebrate(getAllStoriesValidation), ctrl.getStories);
+storiesRouter.get(
+  "/popular",
+  celebrate(getPopularStoriesValidation),
+  ctrl.getPopularStoriesController
+);
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
@@ -18,6 +27,7 @@ storiesRouter.post(
   "/:storyId/favorite",
   isValidId("storyId"),
   authenticate,
+  celebrate(createStoryValidation),
   ctrl.addToFavorite
 );
 storiesRouter.delete(

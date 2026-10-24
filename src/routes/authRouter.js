@@ -7,7 +7,7 @@ import { auth as ctrl } from "../controllers/index.js";
 import {
   registerUserValidation,
   loginUserValidation,
-} from "../validations/authValidation.js";
+} from "../validations/index.js";
 
 import { authenticate } from "../middlewares/authenticate.js";
 
