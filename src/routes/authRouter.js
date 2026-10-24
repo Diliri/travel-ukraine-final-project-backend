@@ -7,6 +7,7 @@ import { auth as ctrl } from "../controllers/index.js";
 import {
   registerUserValidation,
   loginUserValidation,
+  getPopularStoriesValidation,
 } from "../validations/index.js";
 
 import { authenticate } from "../middlewares/authenticate.js";
@@ -17,5 +18,11 @@ authRouter.post("/register", registerUserValidation, ctrl.registerUser);
 authRouter.post("/logout", authenticate, ctrl.logoutUser);
 authRouter.post("/login", loginUserValidation, ctrl.loginUser);
 authRouter.post("/refresh", ctrl.refreshUserSession);
+// перенесли сюди, щоб не викидало помилку
+storiesRouter.get(
+  "/popular",
+  celebrate(getPopularStoriesValidation),
+  ctrl.getPopularStoriesController
+);
 
 export default authRouter;

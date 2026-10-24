@@ -4,7 +4,6 @@ import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
 import { stories as ctrl } from "../controllers/index.js";
 import {
-  getPopularStoriesValidation,
   getAllStoriesValidation,
   storyIdValidation,
   createStoryValidation,
@@ -12,11 +11,6 @@ import {
 
 const storiesRouter = Router();
 storiesRouter.get("/", celebrate(getAllStoriesValidation), ctrl.getStories);
-storiesRouter.get(
-  "/popular",
-  celebrate(getPopularStoriesValidation),
-  ctrl.getPopularStoriesController
-);
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
