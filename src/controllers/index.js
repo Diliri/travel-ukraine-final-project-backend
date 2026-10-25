@@ -1,11 +1,6 @@
-import {
-  registerUser,
-  logoutUser,
-  loginUser,
-  refreshUserSession,
-  getMe,
-  checkSession,
-} from './auth/authControllers.js';
+import { registerUser } from "./auth/registerUser.js";
+import { logoutUser, refreshUserSession } from "./auth/logoutUser.js";
+import { loginUser } from "./auth/loginUser.js";
 
 import { getCategories } from './categories/getCategories.js';
 import { getStories } from './stories/getStories.js';
@@ -22,6 +17,8 @@ import { updateUserAvatar } from './users/updateUserAvatar.js';
 import { updateUserPassword } from './users/updateUserPassword.js';
 import { getCurrentUser } from './users/getCurrentUser.js';
 
+import { getPopularStories } from "./stories/getPopularStories.js";
+
 export const auth = {
   registerUser,
   logoutUser,
@@ -29,6 +26,7 @@ export const auth = {
   refreshUserSession,
   getMe,
   checkSession,
+  getPopularStories,
 };
 
 export const categories = {

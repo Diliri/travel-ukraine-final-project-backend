@@ -5,10 +5,9 @@ import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
 import { uploadAvatar } from "../middlewares/uploadAvatar.js";
 import {
-  updateProfileSchema,
-  updatePasswordSchema,
+  updateProfileValidation,
+  updatePasswordValidation,
 } from "../validations/profileValidation.js";
-
 
 const usersRouter = Router();
 
@@ -23,7 +22,7 @@ usersRouter.get("/me", authenticate, users.getCurrentUser);
 usersRouter.patch(
   "/me",
   authenticate,
-  celebrate(updateProfileSchema),
+  celebrate(updateProfileValidation),
   users.updateUserProfile
 );
 usersRouter.patch(
@@ -35,7 +34,7 @@ usersRouter.patch(
 usersRouter.patch(
   "/me/password",
   authenticate,
-  celebrate(updatePasswordSchema),
+  celebrate(updatePasswordValidation),
   users.updateUserPassword
 );
 

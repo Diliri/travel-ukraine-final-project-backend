@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Зміна електронної пошти</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f8fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    "
+  >
+    <table
+      role="presentation"
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      style="background-color: #f8fafc; padding: 40px 20px"
+    >
+      <tr>
+        <td align="center">
+          <table
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            style="
+              max-width: 560px;
+              background-color: #ffffff;
+              border-radius: 16px;
+              padding: 40px;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            "
+          >
+            <!-- Шапка / Логотип -->
+            <tr>
+              <td
+                style="
+                  font-size: 22px;
+                  font-weight: 700;
+                  color: #0f766e;
+                  padding-bottom: 24px;
+                  letter-spacing: -0.5px;
+                "
+              >
+                🌿 Природні Мандри
+              </td>
+            </tr>
+            <!-- Привітання -->
+            <tr>
+              <td
+                style="
+                  font-size: 16px;
+                  color: #334155;
+                  line-height: 1.6;
+                  padding-bottom: 16px;
+                "
+              >
+                Вітаємо, <strong>{{name}}</strong>!
+              </td>
+            </tr>
+            <!-- Основний текст -->
+            <tr>
+              <td
+                style="
+                  font-size: 16px;
+                  color: #334155;
+                  line-height: 1.6;
+                  padding-bottom: 28px;
+                "
+              >
+                Ми отримали заявку на оновлення електронної адреси для вашого
+                профілю на нову:
+                <span style="color: #0f766e; font-weight: 600"
+                  >{{newEmail}}</span
+                >. Будь ласка, підтвердіть цю дію, натиснувши на кнопку нижче.
+              </td>
+            </tr>
+            <!-- Кнопка -->
+            <tr>
+              <td align="center" style="padding-bottom: 32px">
+                <a
+                  href="{{link}}"
+                  target="_blank"
+                  style="
+                    display: inline-block;
+                    background-color: #0d9488;
+                    color: #ffffff;
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: 600;
+                    padding: 14px 32px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
+                  "
+                >
+                  Підтвердити зміну пошти
+                </a>
+              </td>
+            </tr>
+            <!-- Термін дії -->
+            <tr>
+              <td
+                style="
+                  font-size: 14px;
+                  color: #64748b;
+                  line-height: 1.5;
+                  padding-bottom: 12px;
+                  border-top: 1px solid #e2e8f0;
+                  padding-top: 20px;
+                "
+              >
+                ⏱️ З соображень безпеки це посилання активне лише протягом
+                <strong>1 години</strong>.
+              </td>
+            </tr>
+            <!-- Попередження -->
+            <tr>
+              <td style="font-size: 14px; color: #64748b; line-height: 1.5">
+                Якщо ви не намагалися змінити пошту, просто проігноруйте цей
+                лист — ваш поточний email залишиться незмінним.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

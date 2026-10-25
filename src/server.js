@@ -1,20 +1,19 @@
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
-import { errors } from 'celebrate';
-import 'dotenv/config';
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import dotenv from "dotenv";
+import { connectMongoDB } from "./db/connectMongoDB.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
+import { errors } from "celebrate";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { logger } from "./middlewares/logger.js";
+import cookieParser from "cookie-parser";
+import authRouter from "./routes/authRouter.js";
+import storiesRouter from "./routes/storiesRouter.js";
+import usersRouter from "./routes/usersRouter.js";
+import categoriesRouter from "./routes/categoriesRouter.js";
 
-import { logger } from './middlewares/logger.js';
-import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import { errorHandler } from './middlewares/errorHandler.js';
-import { connectMongoDB } from './db/connectMongoDB.js';
-
-import authRouter from './routes/authRouter.js';
-import storiesRouter from './routes/storiesRouter.js';
-import usersRouter from './routes/usersRouter.js';
-import categoriesRouter from './routes/categoriesRouter.js';
-import homeRouter from './routes/homeRouter.js';
+dotenv.config();
 
 const app = express();
 
@@ -35,15 +34,15 @@ app.use(
   }),
 );
 
-// Routes
-app.use('/api/auth', authRouter);
-app.use('/api/stories', storiesRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/categories', categoriesRouter);
-//app.use('/api/home', homeRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/stories", storiesRouter);
+app.use("/api/categories", categoriesRouter);
 
+// Middleware для обробки неіснуючих маршрутів (404)
 app.use(notFoundHandler);
 app.use(errors());
+// Middleware для обробки помилок (500)
 app.use(errorHandler);
 
 await connectMongoDB();
