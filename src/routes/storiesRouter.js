@@ -18,17 +18,19 @@ storiesRouter.get(
   celebrate(storyIdValidation),
   ctrl.getStoryById
 );
+
+// Обране
 storiesRouter.post(
-  "/:storyId/favorite",
-  isValidId("storyId"),
+  '/:storyId/favorite',
+  isValidId('storyId'),
   authenticate,
   celebrate(savedStoryParamsValidation),
   ctrl.addToFavorite
 );
 
 storiesRouter.delete(
-  "/:storyId/favorite",
-  isValidId("storyId"),
+  '/:storyId/favorite',
+  isValidId('storyId'),
   authenticate,
   celebrate(savedStoryParamsValidation),
   ctrl.deleteFavorite

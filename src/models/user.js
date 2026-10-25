@@ -1,31 +1,18 @@
-import { Schema, model } from "mongoose";
+import { model, Schema } from 'mongoose';
+import { handleMongooseError, setUpdateOptions } from './hooks.js';
+import { AVATAR_URL } from '../constants/user.js';
 
 const userSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, 'Name is required'],
       trim: true,
       maxlength: 32,
     },
-    avatarUrl: {
-      type: String,
-      default: "https://ac.goit.global/fullstack/react/default-avatar.jpg",
-    },
-    articlesAmount: {
-      type: Number,
-      default: 0,
-      min: 0,
-    },
-    savedArticles: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "story", 
-      },
-    ],
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, 'Email is required'],
       unique: true,
       trim: true,
       lowercase: true,
@@ -33,14 +20,31 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, 'Password is required'],
       select: false,
     },
+    avatarUrl: {
+      type: String,
+      trim: true,
+      default: AVATAR_URL,
+    },
+    articlesAmount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    storiesCount: {
+      type: Number,
+      default: 0,
+    },
+    savedArticles: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'story',
+      },
+    ],
   },
-  { 
-    timestamps: true,
-    versionKey: false 
-  },
+  { timestamps: true, versionKey: false },
 );
 
 userSchema.methods.toJSON = function () {
@@ -49,4 +53,8 @@ userSchema.methods.toJSON = function () {
   return user;
 };
 
-export const UserModel = model("user", userSchema);
+userSchema.post('save', handleMongooseError);
+userSchema.pre('findOneAndUpdate', setUpdateOptions); //Mongoose middleware (хук) на схемі користувача.
+userSchema.post('findOneAndUpdate', handleMongooseError);
+
+export const UserModel = model('user', userSchema);

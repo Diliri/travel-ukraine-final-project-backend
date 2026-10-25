@@ -1,19 +1,15 @@
-import { StoryModel } from "../../models/story.js";
-import { UserModel } from "../../models/user.js";
-import mongoose from "mongoose";
+import { StoryModel } from '../../models/story.js';
+import { UserModel } from '../../models/user.js';
 
 // Отримання списку всіх авторів (для слайдера на головній)
 const getAllTravellers = async () => {
-  return await UserModel.find({}, "name avatarUrl articlesAmount");
+  return await UserModel.find({}, 'name avatarUrl articlesAmount');
 };
 
 // Отримання профілю конкретного автора разом із його статтями + ПАГІНАЦІЯ
 const getTravellerById = async (travellerId, query = {}) => {
   // 1. Шукаємо самого користувача в базі
-  const user = await UserModel.findById(
-    travellerId,
-    "name avatarUrl articlesAmount"
-  );
+  const user = await UserModel.findById(travellerId, 'name avatarUrl articlesAmount');
 
   if (!user) return null;
 
@@ -26,13 +22,11 @@ const getTravellerById = async (travellerId, query = {}) => {
   let totalArticles = 0;
 
   try {
-    const StoryModel = mongoose.model("story");
-
     // Рахуємо загальну кількість статей цього автора для фронтенд-пагінації
-    totalArticles = await StoryModel.countDocuments({ owner: travellerId });
+    totalArticles = await StoryModel.countDocuments({ ownerId: travellerId });
 
     // Забираємо потрібну порцію статей (застосовуємо skip та limit)
-    articles = await StoryModel.find({ owner: travellerId })
+    articles = await StoryModel.find({ ownerId: travellerId })
       .skip(skip)
       .limit(limit);
   } catch (e) {
@@ -43,7 +37,7 @@ const getTravellerById = async (travellerId, query = {}) => {
   // Повертаємо комбінований об'єкт із мета-даними пагінації
   return {
     profile: user,
-    articles: articles,
+    articles,
     pagination: {
       total: totalArticles,
       page,

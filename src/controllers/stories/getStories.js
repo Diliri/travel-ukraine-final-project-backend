@@ -9,11 +9,11 @@ export const getStories = async (req, res) => {
     req.query.category === undefined ? "" : String(req.query.category);
 
   if (!Number.isInteger(limit) || ![8, 9].includes(limit)) {
-    return res.status(400).json({ message: "limit must be 8 or 9" });
+    return res.status(400).json({ message: 'limit must be 8 or 9' });
   }
 
   if (!Number.isInteger(page) || page < 1) {
-    return res.status(400).json({ message: "page must be a positive integer" });
+    return res.status(400).json({ message: 'page must be a positive integer' });
   }
 
   // створила об'єкт фільтра

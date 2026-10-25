@@ -1,10 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
+import { handleMongooseError, setUpdateOptions } from './hooks.js';
 
 const sessionSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
     accessToken: {
@@ -24,7 +25,11 @@ const sessionSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  { versionKey: false, timestamps: true },
 );
 
-export const SessionModel = model("Session", sessionSchema);
+sessionSchema.post('save', handleMongooseError);
+sessionSchema.pre('findOneAndUpdate', setUpdateOptions);
+sessionSchema.post('findOneAndUpdate', handleMongooseError);
+
+export const SessionModel = model('session', sessionSchema);

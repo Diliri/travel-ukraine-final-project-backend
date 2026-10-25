@@ -1,6 +1,21 @@
-// src/routes/authRouter.js
+import { Router } from 'express';
+import {
+  loginUserValidation,
+  registerUserValidation,
+} from '../validations/authValidation.js';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshUserSession,
+  getMe,
+  checkSession,
+} from '../controllers/auth/authControllers.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
-import { Router } from "express";
+const authRouter = Router();
+
+authRouter.post('/register', registerUserValidation, registerUser);
 
 import { auth as ctrl } from "../controllers/index.js";
 import { celebrate } from "celebrate";
@@ -11,10 +26,11 @@ import {
   getPopularStoriesValidation,
 } from "../validations/index.js";
 
-import { authenticate } from "../middlewares/authenticate.js";
+authRouter.post('/logout', authenticate, logoutUser);
 
-const authRouter = Router();
+authRouter.get('/me', authenticate, getMe);
 
+authRouter.get('/session', authenticate, checkSession);
 authRouter.post("/register", registerUserValidation, ctrl.registerUser);
 authRouter.post("/logout", authenticate, ctrl.logoutUser);
 authRouter.post("/login", loginUserValidation, ctrl.loginUser);
