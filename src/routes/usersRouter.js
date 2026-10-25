@@ -8,6 +8,7 @@ import {
   updateProfileValidation,
   updatePasswordValidation,
   getProfilesValidation,
+  getProfileWithStoriesValidation,
   paginationValidation,
 } from "../validations/index.js";
 
@@ -24,6 +25,13 @@ usersRouter.get(
   authenticate,
   celebrate(paginationValidation),
   stories.getMyStories
+);
+
+usersRouter.get(
+  "/:userId",
+  isValidId("userId"),
+  celebrate(getProfileWithStoriesValidation),
+  users.getTravellerProfile
 );
 
 // Маршруты личного кабинета: профиль, аватар, пароль.

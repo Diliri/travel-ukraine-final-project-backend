@@ -18,4 +18,5 @@ export {
   getProfileWithStoriesValidation,
   savedStoryParamsValidation,
   confirmEmailValidation,
+  getProfilesValidation,
 } from "./profileValidation.js";
