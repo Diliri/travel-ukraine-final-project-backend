@@ -1,5 +1,5 @@
-import { StoryModel } from "../models/story.js";
-import { UserModel } from "../models/user.js";
+import { StoryModel } from "../../models/story.js";
+import { UserModel } from "../../models/user.js";
 
 export const getStories = async ({ page, perPage, category }) => {
   const filter = category ? { category } : {};
