@@ -10,6 +10,8 @@ import {
   getProfilesValidation,
   getProfileWithStoriesValidation,
   paginationValidation,
+  confirmEmailValidation,
+  savedStoryParamsValidation,
 } from "../validations/index.js";
 
 const usersRouter = Router();
@@ -67,6 +69,28 @@ usersRouter.get(
   "/:travellerId",
   isValidId("travellerId"),
   users.getTravellerProfile
+);
+
+usersRouter.post(
+  "/confirm-email",
+  celebrate(confirmEmailValidation),
+  users.updateUserProfile
+);
+
+usersRouter.post(
+  "/saved-stories/:storyId",
+  isValidId("storyId"),
+  authenticate,
+  celebrate(savedStoryParamsValidation),
+  stories.addToFavorite
+);
+
+usersRouter.delete(
+  "/saved-stories/:storyId",
+  isValidId("storyId"),
+  authenticate,
+  celebrate(savedStoryParamsValidation),
+  stories.deleteFavorite
 );
 
 export default usersRouter;
