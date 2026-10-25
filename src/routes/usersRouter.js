@@ -1,21 +1,30 @@
 import { Router } from "express";
 import { celebrate } from "celebrate";
-import { users } from "../controllers/index.js";
+import { users, stories } from "../controllers/index.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
 import { uploadAvatar } from "../middlewares/uploadAvatar.js";
 import {
   updateProfileValidation,
   updatePasswordValidation,
-} from "../validations/profileValidation.js";
+  getProfilesValidation,
+  paginationValidation,
+} from "../validations/index.js";
 
 const usersRouter = Router();
 
 // Получить список всех путешественников (авторов)
-usersRouter.get("/", users.getTravellers);
+usersRouter.get("/", celebrate(getProfilesValidation), users.getTravellers);
 
 // Получить данные текущего авторизованного пользователя
 usersRouter.get("/me", authenticate, users.getCurrentUser);
+
+usersRouter.get(
+  "/me/stories",
+  authenticate,
+  celebrate(paginationValidation),
+  stories.getMyStories
+);
 
 // Маршруты личного кабинета: профиль, аватар, пароль.
 // ВАЖНО: стоять ПЕРЕД "/:travellerId", щоб "me" не сприймався як id

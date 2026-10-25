@@ -17,8 +17,8 @@ authRouter.post("/login", loginUserValidation, ctrl.loginUser);
 authRouter.post("/refresh", ctrl.refreshUserSession);
 
 // Захищені маршрути (Protected routes)
-authRouter.get("/me", authenticate, ctrl.getMe);
-authRouter.get("/session", authenticate, ctrl.checkSession);
+authRouter.get("/me", authenticate, ctrl.getMe); // перенести??? видалити???
+authRouter.get("/session", authenticate, ctrl.checkSession); // перенести??? видалити???
 authRouter.post("/logout", authenticate, ctrl.logoutUser);
 
 // Окремий маршрут (перенесено сюди, щоб не викидало помилку)
