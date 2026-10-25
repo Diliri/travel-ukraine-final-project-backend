@@ -1,23 +1,4 @@
-import { Router } from 'express';
-import {
-  loginUserValidation,
-  registerUserValidation,
-} from '../validations/authValidation.js';
-import {
-  registerUser,
-  loginUser,
-  logoutUser,
-  refreshUserSession,
-  getMe,
-  checkSession,
-} from '../controllers/auth/authControllers.js';
-import { authenticate } from '../middlewares/authenticate.js';
-
-const authRouter = Router();
-
-authRouter.post('/register', registerUserValidation, registerUser);
-
-import { auth as ctrl } from "../controllers/index.js";
+import { Router } from "express";
 import { celebrate } from "celebrate";
 
 import {
@@ -25,17 +6,22 @@ import {
   loginUserValidation,
   getPopularStoriesValidation,
 } from "../validations/index.js";
+import { auth as ctrl } from "../controllers/index.js";
+import { authenticate } from "../middlewares/authenticate.js";
 
-authRouter.post('/logout', authenticate, logoutUser);
+const authRouter = Router();
 
-authRouter.get('/me', authenticate, getMe);
-
-authRouter.get('/session', authenticate, checkSession);
+// Публічні маршрути (Public routes)
 authRouter.post("/register", registerUserValidation, ctrl.registerUser);
-authRouter.post("/logout", authenticate, ctrl.logoutUser);
 authRouter.post("/login", loginUserValidation, ctrl.loginUser);
 authRouter.post("/refresh", ctrl.refreshUserSession);
-// перенесли сюди, щоб не викидало помилку
+
+// Захищені маршрути (Protected routes)
+authRouter.get("/me", authenticate, ctrl.getMe);
+authRouter.get("/session", authenticate, ctrl.checkSession);
+authRouter.post("/logout", authenticate, ctrl.logoutUser);
+
+// Окремий маршрут (перенесено сюди, щоб не викидало помилку)
 authRouter.get(
   "/popular",
   celebrate(getPopularStoriesValidation),
