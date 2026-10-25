@@ -34,6 +34,13 @@ usersRouter.get(
   users.getTravellerProfile
 );
 
+usersRouter.get(
+  "/me/saved-stories",
+  authenticate,
+  celebrate(paginationValidation),
+  stories.getSavedStories
+);
+
 // Маршруты личного кабинета: профиль, аватар, пароль.
 // ВАЖНО: стоять ПЕРЕД "/:travellerId", щоб "me" не сприймався як id
 usersRouter.patch(
