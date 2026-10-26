@@ -7,6 +7,8 @@ export {
   getPopularStoriesValidation,
   getAllStoriesValidation,
   storyIdValidation,
+  recommendationsQuerySchema,
+  validateRecommendationsQuery,
   paginationValidation,
   createStoryValidation,
   validateStoriesQuery,

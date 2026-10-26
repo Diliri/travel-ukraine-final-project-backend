@@ -24,6 +24,25 @@ export const storyIdValidation = {
   }),
 };
 
+export const recommendationsQuerySchema = Joi.object({
+  page: Joi.number().integer().min(1).default(1),
+  perPage: Joi.number().integer().min(1).max(3).default(3),
+});
+
+export const validateRecommendationsQuery = (req, res, next) => {
+  const { value, error } = recommendationsQuerySchema.validate(req.query, {
+    abortEarly: false,
+  });
+
+  if (error) {
+    return next(createHttpError(400, error.message));
+  }
+
+  // Express 5 exposes req.query as a read-only getter.
+  res.locals.recommendationsQuery = value;
+  next();
+};
+
 export const paginationValidation = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1).default(1),

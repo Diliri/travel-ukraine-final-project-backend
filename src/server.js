@@ -12,6 +12,8 @@ import authRouter from "./routes/authRouter.js";
 import storiesRouter from "./routes/storiesRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./docs/swagger.js";
 
 dotenv.config();
 
@@ -28,6 +30,10 @@ app.use(
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   }),
 );
+
+app.get("/api-docs.json", (_req, res) => res.json(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
