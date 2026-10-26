@@ -10,6 +10,8 @@ import { addToFavorite } from "./stories/addToFavorite.js";
 import { deleteFavorite } from "./stories/deleteFavorite.js";
 import { getMyStories } from "./stories/getMyStories.js";
 import { getSavedStories } from "./stories/getSavedStories.js";
+import { createStory } from "./stories/createStory.js";
+import { getStoryRecommendations } from "./stories/getStoryRecommendations.js";
 
 import { getTravellers } from "./users/getTravellers.js";
 import { getTravellerProfile } from "./users/getTravellerProfile.js";
@@ -41,6 +43,8 @@ export const stories = {
   deleteFavorite,
   getMyStories,
   getSavedStories,
+  createStory,
+  getStoryRecommendations,
 };
 
 export const users = {

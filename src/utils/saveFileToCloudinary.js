@@ -1,13 +1,16 @@
 import { v2 as cloudinary } from "cloudinary";
 
-cloudinary.config({
-  secure: true,
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+const configureCloudinary = () => {
+  cloudinary.config({
+    secure: true,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+};
 
 export async function saveFileToCloudinary(buffer, userId) {
+  configureCloudinary();
   const options = {
     folder: "travel-ukraine-final-project-backend/avatars",
     public_id: `avatar_${userId}`,
@@ -34,6 +37,7 @@ export async function saveFileToCloudinary(buffer, userId) {
 }
 
 export async function saveStoryImageToCloudinary(buffer) {
+  configureCloudinary();
   const options = {
     folder: "travel-ukraine-final-project-backend/stories",
     resource_type: "image",
@@ -54,4 +58,10 @@ export async function saveStoryImageToCloudinary(buffer) {
     );
     uploadStream.end(buffer);
   });
+}
+
+export async function deleteStoryImageFromCloudinary(publicId) {
+  if (!publicId) return;
+  configureCloudinary();
+  await cloudinary.uploader.destroy(publicId, { resource_type: "image" });
 }
