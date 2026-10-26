@@ -29,12 +29,12 @@ usersRouter.get(
   stories.getMyStories
 );
 
-usersRouter.get(
-  "/:userId",
-  isValidId("userId"),
-  celebrate(getProfileWithStoriesValidation),
-  users.getTravellerProfile
-);
+// usersRouter.get(
+//   "/:userId",
+//   isValidId("userId"),
+//   celebrate(getProfileWithStoriesValidation),
+//   users.getTravellerProfile
+// );
 
 usersRouter.get(
   "/me/saved-stories",
