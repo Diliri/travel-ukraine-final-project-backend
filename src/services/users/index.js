@@ -28,7 +28,7 @@ const getAllTravellers = async (query = {}) => {
   // 4. Формуємо список мандрівників із оновленою кількістю статей
   const travellers = users.map((user) => ({
     ...user,
-    articlesAmount: byId.get(String(_id)) ?? 0,
+    articlesAmount: byId.get(String(user._id)) ?? 0,
   }));
 
   // Повертаємо комбінований об'єкт із мандрівниками та мета-даними пагінації
