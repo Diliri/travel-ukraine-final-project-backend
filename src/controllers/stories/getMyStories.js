@@ -1,9 +1,16 @@
 import { StoryModel } from "../../models/story.js";
+import { getPagination, paginationMeta } from "../../utils/pagination.js";
 
 export const getMyStories = async (req, res) => {
-  const stories = await StoryModel.find({
-    ownerId: req.user._id,
-  });
-
-  res.json(stories);
+  const { page, perPage, skip } = getPagination(req.query);
+  const filter = { ownerId: req.user._id };
+  const [stories, totalItems] = await Promise.all([
+    StoryModel.find(filter)
+      .sort({ createdAt: -1, _id: -1 })
+      .skip(skip)
+      .limit(perPage)
+      .lean(),
+    StoryModel.countDocuments(filter),
+  ]);
+  res.json({ stories, pagination: paginationMeta(totalItems, page, perPage) });
 };

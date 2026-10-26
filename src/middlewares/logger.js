@@ -1,16 +1,12 @@
-import pino from 'pino-http';
+import pino from "pino-http";
 
+const pretty = process.env.NODE_ENV !== "production";
 export const logger = pino({
-  level: 'info',
-  transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-      translateTime: 'HH:MM:ss',
-      ignore: 'pid,hostname',
-      messageFormat:
-        '{req.method} {req.url} {res.statusCode} - {responseTime}ms',
-      hideObject: true,
+  level: process.env.LOG_LEVEL || "info",
+  ...(pretty && {
+    transport: {
+      target: "pino-pretty",
+      options: { colorize: true, translateTime: "HH:MM:ss" },
     },
-  },
+  }),
 });

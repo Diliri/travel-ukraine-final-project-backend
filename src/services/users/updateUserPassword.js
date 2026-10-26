@@ -9,10 +9,11 @@ export const updateUserPassword = async (
   // password має select: false, тому просимо його явно
   const user = await UserModel.findById(userId).select("+password");
   if (!user) throw createHttpError(401, "Необхідно увійти в систему");
-
-  const isCurrentValid = await bcrypt.compare(currentPassword, user.password);
-  if (!isCurrentValid) throw createHttpError(400, "Поточний пароль невірний");
-
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  await UserModel.updateOne({ _id: userId }, { password: hashedPassword });
+  if (!(await bcrypt.compare(currentPassword, user.password))) {
+    throw createHttpError(400, "Поточний пароль невірний");
+  }
+  await UserModel.updateOne(
+    { _id: userId },
+    { password: await bcrypt.hash(newPassword, 10) }
+  );
 };

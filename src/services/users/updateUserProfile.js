@@ -4,17 +4,21 @@ import { UserModel } from "../../models/user.js";
 const EMAIL_IN_USE = "Користувач із таким email уже існує";
 
 export const updateUserProfile = async (userId, { name, email }) => {
-  const taken = await UserModel.findOne({ email, _id: { $ne: userId } });
+  const normalizedEmail = email.trim().toLowerCase();
+  const taken = await UserModel.exists({
+    email: normalizedEmail,
+    _id: { $ne: userId },
+  });
   if (taken) throw createHttpError(409, EMAIL_IN_USE);
 
   try {
     return await UserModel.findByIdAndUpdate(
       userId,
-      { name, email },
+      { name, email: normalizedEmail },
       { new: true }
     );
   } catch (error) {
-    // гонка запитів: унікальний індекс спрацював раніше за перевірку
+    // The unique index may catch a race between the check and the update.
     if (error.code === 11000) throw createHttpError(409, EMAIL_IN_USE);
     throw error;
   }
