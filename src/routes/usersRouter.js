@@ -1,41 +1,30 @@
-import { Router } from "express";
 import { celebrate } from "celebrate";
-import { users, stories } from "../controllers/index.js";
+import { Router } from "express";
+import { stories, users } from "../controllers/index.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
 import { uploadAvatar } from "../middlewares/uploadAvatar.js";
 import {
-  updateProfileValidation,
-  updatePasswordValidation,
-  getProfilesValidation,
   getProfileWithStoriesValidation,
+  getProfilesValidation,
   paginationValidation,
-  confirmEmailValidation,
   savedStoryParamsValidation,
+  updatePasswordValidation,
+  updateProfileValidation,
 } from "../validations/index.js";
 
 const usersRouter = Router();
 
-// Получить список всех путешественников (авторов)
+// Public travellers list; page size supports the 12-card homepage slider.
 usersRouter.get("/", celebrate(getProfilesValidation), users.getTravellers);
 
-// Получить данные текущего авторизованного пользователя
 usersRouter.get("/me", authenticate, users.getCurrentUser);
-
 usersRouter.get(
   "/me/stories",
   authenticate,
   celebrate(paginationValidation),
   stories.getMyStories
 );
-
-// usersRouter.get(
-//   "/:userId",
-//   isValidId("userId"),
-//   celebrate(getProfileWithStoriesValidation),
-//   users.getTravellerProfile
-// );
-
 usersRouter.get(
   "/me/saved-stories",
   authenticate,
@@ -43,8 +32,23 @@ usersRouter.get(
   stories.getSavedStories
 );
 
-// Маршруты личного кабинета: профиль, аватар, пароль.
-// ВАЖНО: стоять ПЕРЕД "/:travellerId", щоб "me" не сприймався як id
+// Backend spec: saving and removing stories belongs under /api/users
+usersRouter.post(
+  "/saved-stories/:storyId",
+  authenticate,
+  isValidId("storyId"),
+  celebrate(savedStoryParamsValidation),
+  stories.addToFavorite
+);
+usersRouter.delete(
+  "/saved-stories/:storyId",
+  authenticate,
+  isValidId("storyId"),
+  celebrate(savedStoryParamsValidation),
+  stories.deleteFavorite
+);
+
+// Optional profile-management routes (not required for the core MVP)
 usersRouter.patch(
   "/me",
   authenticate,
@@ -64,33 +68,12 @@ usersRouter.patch(
   users.updateUserPassword
 );
 
-// Получить публичный профиль конкретного автора по ID
+// Keep dynamic IDs last, so /me and other static paths are never captured
 usersRouter.get(
   "/:travellerId",
   isValidId("travellerId"),
+  celebrate(getProfileWithStoriesValidation),
   users.getTravellerProfile
-);
-
-usersRouter.post(
-  "/confirm-email",
-  celebrate(confirmEmailValidation),
-  users.updateUserProfile
-);
-
-usersRouter.post(
-  "/saved-stories/:storyId",
-  isValidId("storyId"),
-  authenticate,
-  celebrate(savedStoryParamsValidation),
-  stories.addToFavorite
-);
-
-usersRouter.delete(
-  "/saved-stories/:storyId",
-  isValidId("storyId"),
-  authenticate,
-  celebrate(savedStoryParamsValidation),
-  stories.deleteFavorite
 );
 
 export default usersRouter;

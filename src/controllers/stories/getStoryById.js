@@ -1,7 +1,5 @@
-import { getStoryById as getStory } from "../../services/stories/getStoryById.js";
+import { getStoryById as findStory } from "../../services/stories/getStoryById.js";
 
-// GET /api/stories/:storyId
 export const getStoryById = async (req, res) => {
-  const story = await getStory(req.params.storyId);
-  res.status(200).json(story);
+  res.json(await findStory(req.params.storyId));
 };

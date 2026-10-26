@@ -1,17 +1,14 @@
-import { createStory as createStoryService } from "../../services/stories/createStory.js";
+import createHttpError from "http-errors";
+import { createStory as saveStory } from "../../services/stories/createStory.js";
 
 export const createStory = async (req, res) => {
-  const file = req.files?.img?.[0] ?? req.files?.image?.[0];
-
-  const story = await createStoryService({
+  if (!req.file) {
+    throw createHttpError(400, "Зображення історії обов'язкове (поле img)");
+  }
+  const story = await saveStory({
+    ...req.body,
+    file: req.file,
     user: req.user,
-    file,
-    payload: req.body,
   });
-
-  res.status(201).json({
-    status: 201,
-    message: "Story created successfully",
-    data: story,
-  });
+  res.status(201).json(story);
 };

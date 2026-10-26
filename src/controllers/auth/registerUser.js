@@ -8,29 +8,20 @@ import {
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
-
   const normalizedEmail = email.trim().toLowerCase();
 
-  const existingUser = await UserModel.findOne({ email: normalizedEmail });
-
-  if (existingUser) {
-    const error = createHttpError(409);
+  if (await UserModel.exists({ email: normalizedEmail })) {
+    const error = createHttpError(409, "Email already exists");
     error.code = "EMAIL_ALREADY_EXISTS";
     throw error;
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = await UserModel.create({
+  const user = await UserModel.create({
     name: name.trim(),
     email: normalizedEmail,
-    password: hashedPassword,
+    password: await bcrypt.hash(password, 10),
   });
-
-  const newSession = await createSession(newUser._id);
-  setSessionCookies(res, newSession);
-
-  res.status(201).json({
-    user: newUser,
-  });
+  const session = await createSession(user._id);
+  setSessionCookies(res, session);
+  res.status(201).json({ user });
 };

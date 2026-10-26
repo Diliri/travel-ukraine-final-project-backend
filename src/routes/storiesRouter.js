@@ -1,60 +1,69 @@
-import { Router } from "express";
 import { celebrate } from "celebrate";
+import { Router } from "express";
+import { stories as ctrl } from "../controllers/index.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { isValidId } from "../middlewares/isValidId.js";
-import { upload } from "../middlewares/multer.js";
-import { stories as ctrl } from "../controllers/index.js";
+import { uploadStoryImage } from "../middlewares/uploadStoryImage.js";
 import {
   createStoryValidation,
   getAllStoriesValidation,
-  validateRecommendationsQuery,
-  storyIdValidation,
+  getPopularStoriesValidation,
+  paginationValidation,
   savedStoryParamsValidation,
+  storyIdValidation,
 } from "../validations/index.js";
 
 const storiesRouter = Router();
+
+// Main catalog, including ?category=...&page=...&perPage=...&type=popular.
 storiesRouter.get("/", celebrate(getAllStoriesValidation), ctrl.getStories);
+
+// Optional shortcut for the homepage slider; canonical popular filter is above.
+storiesRouter.get(
+  "/popular",
+  celebrate(getPopularStoriesValidation),
+  ctrl.getPopularStories
+);
 
 storiesRouter.post(
   "/",
   authenticate,
-  upload.fields([
-    { name: "img", maxCount: 1 },
-    { name: "image", maxCount: 1 },
-  ]),
+  uploadStoryImage,
   celebrate(createStoryValidation),
-  ctrl.createStory,
+  ctrl.createStory
 );
 
-storiesRouter.get(
-  "/:storyId/recommendations",
+const recommendedHandlers = [
   isValidId("storyId"),
-  validateRecommendationsQuery,
-  ctrl.getStoryRecommendations,
-);
+  celebrate(storyIdValidation),
+  celebrate(paginationValidation),
+  ctrl.getRecommendedStories,
+];
+storiesRouter.get("/:storyId/recommended", ...recommendedHandlers);
+
+storiesRouter.get("/:storyId/recommendations", ...recommendedHandlers);
 
 storiesRouter.get(
   "/:storyId",
   isValidId("storyId"),
   celebrate(storyIdValidation),
-  ctrl.getStoryById,
+  ctrl.getStoryById
 );
 
-// Обране
+// Canonical saved-story actions are under /api/users.
 storiesRouter.post(
   "/:storyId/favorite",
-  isValidId("storyId"),
   authenticate,
+  isValidId("storyId"),
   celebrate(savedStoryParamsValidation),
-  ctrl.addToFavorite,
+  ctrl.addToFavorite
 );
-
 storiesRouter.delete(
   "/:storyId/favorite",
-  isValidId("storyId"),
   authenticate,
+  isValidId("storyId"),
   celebrate(savedStoryParamsValidation),
-  ctrl.deleteFavorite,
+  ctrl.deleteFavorite
 );
 
 export default storiesRouter;

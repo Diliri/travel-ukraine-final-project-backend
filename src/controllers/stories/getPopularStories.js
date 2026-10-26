@@ -1,13 +1,5 @@
-export const getPopularStories = async (req, res, next) => {
-  try {
-    const stories = await getPopularStories();
+import { getPopularStories as findPopular } from "../../services/stories/getPopularStories.js";
 
-    res.status(200).json({
-      status: 200,
-      message: "Successfully fetched popular stories!",
-      data: stories,
-    });
-  } catch (error) {
-    next(error);
-  }
+export const getPopularStories = async (req, res) => {
+  res.json(await findPopular(req.query));
 };

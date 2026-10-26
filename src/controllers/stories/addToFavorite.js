@@ -1,10 +1,6 @@
-import { addToFavorite as addFavoriteStory } from "../../services/stories/addToFavorite.js";
+import { addToFavorite as saveFavorite } from "../../services/stories/addToFavorite.js";
 
-export const addToFavorite = async (req, res, next) => {
-  try {
-    const user = await addFavoriteStory(req.user, req.params.storyId);
-    res.status(200).json(user);
-  } catch (error) {
-    next(error);
-  }
+export const addToFavorite = async (req, res) => {
+  const user = await saveFavorite(req.user, req.params.storyId);
+  res.json(user);
 };
