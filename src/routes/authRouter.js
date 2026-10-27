@@ -12,7 +12,7 @@ const authRouter = Router();
 authRouter.post("/register", registerUserValidation, ctrl.registerUser);
 authRouter.post("/login", loginUserValidation, ctrl.loginUser);
 authRouter.post("/refresh", ctrl.refreshUserSession);
-authRouter.post("/logout", authenticate, ctrl.logoutUser);
+authRouter.post("/logout", ctrl.logoutUser);
 
 // Optional frontend session helpers; canonical profile: GET /api/users/me.
 authRouter.get("/session", authenticate, ctrl.checkSession);
