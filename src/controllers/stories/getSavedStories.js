@@ -6,6 +6,7 @@ export const getSavedStories = async (req, res) => {
   const filter = { _id: { $in: req.user.savedArticles } };
   const [stories, totalItems] = await Promise.all([
     StoryModel.find(filter)
+      .populate("ownerId", "name avatarUrl")
       .sort({ createdAt: -1, _id: -1 })
       .skip(skip)
       .limit(perPage)
